@@ -4,5 +4,5 @@ from django.http import HttpResponse
 
 
 def index(request):
-    x = 1
+    
     return render(request, 'hello.html', {'name': 'Nudom'})   
