@@ -4,4 +4,5 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse('Welcome to Django Course')
+    x = 1
+    return render(request, 'hello.html', {'name': 'Nudom'})   
