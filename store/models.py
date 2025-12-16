@@ -10,7 +10,7 @@ class Collection(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    price = models.DecimalField()
+    price = models.DecimalField(max_digits=6, decimal_places=2)
     inventory = models.IntegerField()
     last_update = models.DateTimeField(auto_now=True) #Automatically updates on each save
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT)# collection is parent class
@@ -50,7 +50,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.PROTECT)
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
-    quantity = models.DecimalField()
+    quantity = models.DecimalField(max_digits=6, decimal_places=2)
     unit_price = models.DecimalField(max_digits=6, decimal_places=2)
 
 class Address(models.Model):
