@@ -30,8 +30,8 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=255,unique=True)
-    phone = models.CharField()
-    birth_data = models.DateField(null=True)
+    phone = models.CharField(max_length=100)
+    birth_data = models.DateField()
     membership = models.CharField(max_length=1, choices=MEMBER_CHOICES, default=MEMBER_BRONZE)
 
 class Order(models.Model):
