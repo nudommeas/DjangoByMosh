@@ -9,5 +9,5 @@ from store.models import Collection
 
 
 def index(request):
-    queryset = Product.objects.all()[:5]
+    queryset = Product.objects.values('id', 'title', 'collection__title')
     return render(request, 'hello.html', {'name': 'Nudom', 'products': list(queryset)})   
