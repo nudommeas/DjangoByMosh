@@ -6,12 +6,8 @@ from store.models import Product
 from store.models import Collection
 # Create your views here.
 
-# __icontains 
-# __contains --> lookup type
-# __range --> lookup type
-# __year 
 
 
 def index(request):
-    queryset = Product.objects.filter(Q(inventory__lt=10) & Q(unit_price__lt=20))
+    queryset = Product.objects.all()[:5]
     return render(request, 'hello.html', {'name': 'Nudom', 'products': list(queryset)})   
