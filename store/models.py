@@ -8,6 +8,12 @@ class Collection(models.Model):
     title = models.CharField(max_length=255)
     featured_product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, related_name='+')
 
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        ordering = ['title']
+
 class Product(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField()
@@ -17,6 +23,12 @@ class Product(models.Model):
     last_update = models.DateTimeField(auto_now=True) #Automatically updates on each save
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT)# collection is parent class
     promotion = models.ManyToManyField(Promotion)
+
+    def __str__(self):
+        return self.title
+    
+    class Meta: 
+        ordering = ['title'] #sorting from A-Z
 
 class Customer(models.Model):
     MEMBER_BRONZE = 'B'
@@ -34,7 +46,7 @@ class Customer(models.Model):
     phone = models.CharField(max_length=100)
     birth_date = models.DateField()
     membership = models.CharField(max_length=1, choices=MEMBER_CHOICES, default=MEMBER_BRONZE)
-
+    
 class Order(models.Model):
     PAYMENT_STATUS_PENDING = 'P'
     PAYMENT_STATUS_COMPLETED = 'C'
