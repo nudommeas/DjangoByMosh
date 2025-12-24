@@ -28,7 +28,7 @@ class Product(models.Model):
         return self.title
     
     class Meta: 
-        ordering = ['title'] #sorting from A-Z
+        ordering = ['title'] #sorting from A-Z alphabetically
 
 class Customer(models.Model):
     MEMBER_BRONZE = 'B'
@@ -46,7 +46,8 @@ class Customer(models.Model):
     phone = models.CharField(max_length=100)
     birth_date = models.DateField()
     membership = models.CharField(max_length=1, choices=MEMBER_CHOICES, default=MEMBER_BRONZE)
-    
+
+
 class Order(models.Model):
     PAYMENT_STATUS_PENDING = 'P'
     PAYMENT_STATUS_COMPLETED = 'C'
