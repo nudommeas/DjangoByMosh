@@ -2,12 +2,26 @@ from django.contrib import admin
 from django.db.models import Count
 from . import models
 # Register your models here.
+
+class InventoryFilter(admin.SimpleListFilter): #custom filter or ModelAdmin List filters
+    title = 'inventory'
+    parameter_name = 'inventory'
+
+    def lookups(self, request, model_admin):
+        return [
+            ('<10', 'Low')
+        ]
+    def queryset(self, request, queryset):
+        if self.value() == '<10':
+            return queryset.filter(inventory__lt=10)
+        
 @admin.register(models.Product) #registered decorator
 class ProductAdmin(admin.ModelAdmin): #Class ModelAdmin
     list_display = ['title', 'unit_price', 'inventory_status']
     list_editable = ['unit_price']
     list_per_page = 10
     list_select_related = ['collection']
+    list_filter = ['collection', 'last_update', InventoryFilter]
 
     @admin.display(ordering='inventory')
     def inventory_status(self, product): #computed columns
@@ -27,7 +41,6 @@ class CollectionAdmin(admin.ModelAdmin):
         return super().get_queryset(request).annotate(
             products_count=Count('product')
         )
-
 @admin.register(models.Customer)
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'last_name', 'membership']
