@@ -26,3 +26,6 @@
 
 **Installing Django REST Framework**
 After the installation, include `rest_framework` to INSTALLED_APPS in the setting.py
+
+**Creating API Views**
+>> from rest_framework.decorators import api_view --> Just simple and beginner-frendly, Good for small APIs
