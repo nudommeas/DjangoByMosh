@@ -35,3 +35,17 @@ After the installation, include `rest_framework` to INSTALLED_APPS in the settin
 Serializer is an object that knows how to convert a model instance, like a product object to Python dictionary
 \\ Basic Serializer \\
 `from rest_framework import serializers` --> Used when you don't have a model
+
+**Serializing Objects**
+Serializing Objects means turning Python objects (usually model instances) into JSON so they can be sent to client.
+# Object -> Serializer -> JSON
+1. Serialize a single object
+# Model Instance
+student = Student.objects.get(pk=id) Object
+serializer = StudentSerializer(student) Serializer
+serializer.data
+
+>>Little Adjustment in the setting.py
+# REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING': False
+}
