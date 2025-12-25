@@ -85,3 +85,13 @@ Arguments:
 `view_name` - The views naem that should be used as the target of the relationship. Set it in the Urls.py 
 `queryset` - The queryset used for model instance lookups when validating the field input
 `lookup_field` - Default is `pk`.
+
+**Model Serializers**
+Model serializers are a shotcut for creating serializers that work directly with Django models.
+`Model` = database structure
+`ModelSerializer` = automatic serializer for that model. Means: A ModelSerializer automatically converts a Djang model instance into JSON.
+<class Meta:
+    model
+    fields
+def()
+>
