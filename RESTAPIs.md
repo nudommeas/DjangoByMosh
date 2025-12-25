@@ -27,6 +27,8 @@
 **Installing Django REST Framework**
 After the installation, include `rest_framework` to INSTALLED_APPS in the setting.py
 
+# `Serializers: Transforming Django Models to JSON`
+
 **Creating API Views**
 \\ Function-Based API Views \\
 >> `from rest_framework.decorators import api_view` --> Just simple and beginner-frendly, Good for small APIs
@@ -53,3 +55,33 @@ serializer.data
 **Creating Custom Serializer Fields**
 Custom serilizer fields let you control exactly how a value is calculated, displayed, or validated in the JSON output
 `SerializerMethodField()` used for read-only computed fields
+
+**Serializing Relationship**
+1. Primary Key Related Field(`PrimaryKeyRelatedField`)
+Arguments:
+`queryset` - The queryset used for model instance lookups when validating the field input
+2. String Related Field(`StringRelatedField`)
+3. Nested Serializers --> This creates a nested JSON structure
+# class CollectionSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    title = serializers.CharField(max_length=255)
+# class ProductSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    title = serializers.CharField(max_length=255)
+    collection = CollectionSerializer()
+# Output:
+    {
+        "id": 648,
+        "title": "7up Diet, 355 Ml",
+        "unit_price": 79.07,
+        "price_with_tax": 86.977,
+        "collection": {
+            "id": 5,
+            "title": "Stationary"
+        }
+    },
+4. Hyperlinked Related Field(`HyperlinkedRelatedField`)
+Arguments:
+`view_name` - The views naem that should be used as the target of the relationship. Set it in the Urls.py 
+`queryset` - The queryset used for model instance lookups when validating the field input
+`lookup_field` - Default is `pk`.
