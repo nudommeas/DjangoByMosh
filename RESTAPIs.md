@@ -93,12 +93,14 @@ Model serializers are a shotcut for creating serializers that work directly with
 <class Meta:
     model
     fields
-def()
+def validate()
+def create()
 >
 
 **Deserializing Objects**
 Deserializing objects meanns converting incoming JSON Data into Python objects (usaully Model Instances).
-
+# JSON -> Serializer -> Python Object/Model
+---------------
 # For Example:
 -->The Client wants to create a new product
 --> To do this, it should send a POST request to the products endpoint <POST /products >
@@ -109,4 +111,29 @@ Deserializing objects meanns converting incoming JSON Data into Python objects (
 }
 --> So on the server, we have to read the data in the body of the request and deserialize it so we get a product object and store it in the Database
 
-# JSON -> Serializer -> Python Object/Model
+# serialize = ProductSerializer(data=request.data) 
+What DRF does:
+1. Takes JSON from the client requests --> request.data
+2. Converts the client data into Python data
+3. Validates it
+4. Creates or updates a model object
+
+# Data validation
+Summary: Data Validation ensures only correct and safe data is saved to the database.
+
+\\ reqest.data -> deserializer -> is_valid() -> validated_data -> save() \\
+
+# if serializer.is_valid(): # Validate the incoming data
+#     serializer.validated_data # .validated_data holds the cleaned, valid incoming after the .is_valid() is TRUE
+      it holds as a dictionary
+
+\\ First Approach \\
+# if errors 
+# from rest_framework import Product
+# Return Response(serializer.error, status=status.Http)
+
+\\ Second Approach \\
+# serializer = ProductSerializer(data=request.data)
+# serializer.is_valid(raise_exception=True)
+# serializer.validated_data
+# return Response('OK')
