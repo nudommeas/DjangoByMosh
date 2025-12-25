@@ -28,4 +28,10 @@
 After the installation, include `rest_framework` to INSTALLED_APPS in the setting.py
 
 **Creating API Views**
->> from rest_framework.decorators import api_view --> Just simple and beginner-frendly, Good for small APIs
+\\ Function-Based API Views \\
+>> `from rest_framework.decorators import api_view` --> Just simple and beginner-frendly, Good for small APIs
+
+**Creating Serializers**
+Serializer is an object that knows how to convert a model instance, like a product object to Python dictionary
+\\ Basic Serializer \\
+`from rest_framework import serializers` --> Used when you don't have a model
