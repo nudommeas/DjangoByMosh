@@ -21,7 +21,7 @@ class Product(models.Model):
     unit_price = models.DecimalField(max_digits=6, decimal_places=2)
     inventory = models.IntegerField()
     last_update = models.DateTimeField(auto_now=True) #Automatically updates on each save
-    collection = models.ForeignKey(Collection, on_delete=models.PROTECT)# collection is parent class
+    collection = models.ForeignKey(Collection, on_delete=models.PROTECT, related_name='products')# collection is parent class
     promotion = models.ManyToManyField(Promotion)
 
     def __str__(self):

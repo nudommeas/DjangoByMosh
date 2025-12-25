@@ -109,6 +109,7 @@ Deserializing objects meanns converting incoming JSON Data into Python objects (
     "title": "Hello", 
     "price": 10       
 }
+# data=request.data -> contains user data submitted
 --> So on the server, we have to read the data in the body of the request and deserialize it so we get a product object and store it in the Database
 
 # serialize = ProductSerializer(data=request.data) 
@@ -145,3 +146,14 @@ When updating, you pass the existing model instances as the first argument to th
 # serializer = ProductSerializer(product, data=request.data) # data=request.data: new data submiited by the client or user
 
 **Deleting Objects**
+\\ Business Rule \\
+if collection.products.count() > 0:
+    return Response({'errors': 'Collection cannot be deleted'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+# meaning: A collection must not be deleted if it still contains products
+# if there's no product or prodcut = 0 , you can delete the collection
+
+
+annotate()
+aggregate()
+select_related()
