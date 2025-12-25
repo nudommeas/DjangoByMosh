@@ -143,3 +143,5 @@ Summary: Data Validation ensures only correct and safe data is saved to the data
 When updating, you pass the existing model instances as the first argument to the serializer and the new data as the `data` keyword argument.
 # product = get_object_or_404(Product, pk=id) # getting the existing users data in the datase
 # serializer = ProductSerializer(product, data=request.data) # data=request.data: new data submiited by the client or user
+
+**Deleting Objects**
