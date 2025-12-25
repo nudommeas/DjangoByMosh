@@ -9,11 +9,14 @@ class InventoryFilter(admin.SimpleListFilter): #custom filter or ModelAdmin List
 
     def lookups(self, request, model_admin):
         return [
-            ('<10', 'Low')
+            ('<10', 'Low'),
+            ('>10', 'OK')
         ]
     def queryset(self, request, queryset):
         if self.value() == '<10':
             return queryset.filter(inventory__lt=10)
+        if self.value() == '>10':
+            return queryset.filter(inventory__gt=10)
         
 @admin.register(models.Product) #registered decorator
 class ProductAdmin(admin.ModelAdmin): #Class ModelAdmin
@@ -28,6 +31,9 @@ class ProductAdmin(admin.ModelAdmin): #Class ModelAdmin
         if product.inventory < 10:
             return 'LOW'
         return 'OK'
+    @admin.action(description='Clear Inventory')
+    def clear_inventory(self, request, queryset):
+        queryset.update()
 
 @admin.register(models.Collection)
 class CollectionAdmin(admin.ModelAdmin):
