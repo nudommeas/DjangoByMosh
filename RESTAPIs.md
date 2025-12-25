@@ -49,3 +49,7 @@ serializer.data
 # REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False
 }
+
+**Creating Custom Serializer Fields**
+Custom serilizer fields let you control exactly how a value is calculated, displayed, or validated in the JSON output
+`SerializerMethodField()` used for read-only computed fields
