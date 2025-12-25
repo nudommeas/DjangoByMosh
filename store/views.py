@@ -5,11 +5,15 @@ from rest_framework.response import Response
 from .models import Product
 from .serializers import ProductSerializer
 # Create your views here.
-@api_view()
+@api_view(['GET', 'POST'])
 def product_list(request):
-    product = Product.objects.select_related('collection').all()
-    serializer = ProductSerializer(product, many=True, context={'request': request}) #many=True tells the serializer to expect an iterable (like a queryset) and to serialize each item within it
-    return Response(serializer.data)
+    if request.method == 'GET':
+        product = Product.objects.select_related('collection').all()
+        serializer = ProductSerializer(product, many=True, context={'request': request}) #many=True tells the serializer to expect an iterable (like a queryset) and to serialize each item within it
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = ProductSerializer(data=request.data)
+        return Response('OK')
 
 @api_view()
 def product_detail(request, id):

@@ -95,3 +95,18 @@ Model serializers are a shotcut for creating serializers that work directly with
     fields
 def()
 >
+
+**Deserializing Objects**
+Deserializing objects meanns converting incoming JSON Data into Python objects (usaully Model Instances).
+
+# For Example:
+-->The Client wants to create a new product
+--> To do this, it should send a POST request to the products endpoint <POST /products >
+--> and In the body of the request should include a product object
+{ \\ Here's the request body \\
+    "title": "Hello", 
+    "price": 10       
+}
+--> So on the server, we have to read the data in the body of the request and deserialize it so we get a product object and store it in the Database
+
+# JSON -> Serializer -> Python Object/Model
