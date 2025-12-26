@@ -153,7 +153,7 @@ if collection.products.count() > 0:
 # meaning: A collection must not be deleted if it still contains products
 # if there's no product or prodcut = 0 , you can delete the collection
 
-
+# many=True tells the serializer to expect an iterable (like a queryset) and to serialize each item within it
 annotate()
 aggregate()
 select_related()
