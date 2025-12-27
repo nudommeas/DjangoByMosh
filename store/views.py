@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
-from .models import Product, Collection
-from .serializers import ProductSerializer, CollectionSerializer
+from .models import Product, Collection, Review
+from .serializers import ProductSerializer, CollectionSerializer, ReviewSerializer
 from django.db.models import Count
 # Create your views here.
 
@@ -38,3 +38,6 @@ class CollectionViewset(ModelViewSet):
     #         return Response({'errors': 'Collection cannot be delete with associated product_count'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
     #     collection.delete()
     #     return Response(status=status.HTTP_204_NO_CONTENT)
+class ReviewViewSet(ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
