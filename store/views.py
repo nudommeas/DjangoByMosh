@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from .models import Product, Collection
 from .serializers import ProductSerializer, CollectionSerializer
 from django.db.models import Count
@@ -18,7 +18,7 @@ class ProductViewset(ModelViewSet):
     def get_serializer_context(self):
         return {'request': self.request}
     
-    def delete(self, request , pk):
+    def destroy(self, request , pk):
         product = get_object_or_404(Product, pk=pk)
         product.delete()
         return Response({'message': 'The product has been removed'}, status=status.HTTP_204_NO_CONTENT)
@@ -27,9 +27,14 @@ class CollectionViewset(ModelViewSet):
     queryset = Collection.objects.annotate(products_count=Count('products')).all()
     serializer_class = CollectionSerializer
 
-    def delete(self, request, pk):
-        collection = get_object_or_404(Collection, pk=pk)
-        if collection.products.count() > 0:
-            return Response({'errors': 'Collection cannot be delete with associated product_count'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-        collection.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def destroy(self, request, *args, **kwargs):
+        if Product.objects.filter(collection__id=kwargs['pk']).count() > 0:
+            return Response({'errors': 'Collection cannot be delete with associated product_count'})
+        return super().destroy(request, *args, **kwargs)
+
+    # def destroy(self, request, pk):
+    #     collection = get_object_or_404(Collection, pk=pk)
+    #     if collection.products.count() > 0:
+    #         return Response({'errors': 'Collection cannot be delete with associated product_count'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    #     collection.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)

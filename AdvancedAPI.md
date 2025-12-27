@@ -52,8 +52,67 @@ They combine the functionality of `APIview` with specific mixins to provide read
 \\ ------------------------------------ ------------------------------------ \\ 
 
 **ViewSets**
-Using Viewset can combine the logic for multiple related views inside a single class. 
+
+# Using Viewset can combine the logic for multiple related views such as `list` , `retrieve` , `create` , `update` , `destroy` inside a single class. 
+
 The viewset can be imported `from rest_framework.viewsets import ModelViewset`
 
-A viewset that provides default `create()`, `retrieve()`, `update()`,
-`partial_update()`, `destroy()` and `list()` actions.
+# `GenericViewset`: Extends `ViewSet` and integrates with DRF's `GenericAPIView` base class, providing `get_object`, `get_queryset`, `get_serializer`, and other methods but without specific action implementations. This is useful when you want to define custom actions or have full control over the actions.
+
+# `ModelViewSet` Extends `GenericViewSet` and includes implementations for `list`, `retrieve`, `create`, `update`, `destroy`actions, based on a model. This is the most commonly used `ViewSet` for typical CRUD operations on a single model.
+
+For Example of `ModelViewSet`:
+
+class BookViewSet(ModelViewSet): 
+# This means: The class BookViewSet inherit from ModelViewSet. When this single class registered with a router, automatically handles:
+`GET /books/`: List all books(`list` action)
+`POST /books/` Create a new book (`create` action)
+`GET /books/{id}`: Retrieve a single book (`retrieve` action)
+`PUT /books/{id}`: Update a book (`update` action)
+`PATCH /books/{id}`: Partially update a book (`partial_update` action)
+`DELETE /books/{id}`: Delete a book (`destroy` action)
+
+\\ ------------------------------------ ------------------------------------ \\ 
+
+**Understanding Filter() method**
+
+# Mostly used for filter across relationship using the `double underscore (__)` syntax
+# This works for `ForeignKey`, `ManyToManyField`, and `OneToOneField` relationships. 
+
+\\ How to filter Across Relationship? \\
+# To span a relationship, you use the `field name` of the related `model`(e,g. `Blog model`), followed by a double underscore, and then the `field name` on the related model you want to filter on (e,g. `Entry model`).
+
+from django.db import models
+
+# class Blog(models.Model):
+    name = models.CharField(max_length=100)
+
+# class Entry(models.Model):
+    headline = models.CharField(max_length=255)
+    pub_date = models.DateField()
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+
+Filter Example: 
+# Filter `Entry` objects based on the `name` of the related `Blog`
+
+# `Entry`.objects.`filter`(blog__name='Beatles Blog')--> This retrieves all Entry objects associated with a Blog named 'Beatles Blog'.
+# The lowercase name of the related model (blog) is used for the reverse relationship lookup.
+
+# Filter `Blog` objects based on the headline of a related `Entry`
+
+# if `Product`.objects.`filter`(collection__id=kwargs['pk']).count() > 0:
+    return Response({'errors': 'Collection cannot be delete with associated product_count'})
+
+\\ ------------------------------------ ------------------------------------ \\ 
+
+**Understanding DRF Routers**
+
+`DefaultRouter`: It automatically generates URL patterns for standard CRUD operations and also includes an API root view that lists all registered resources, along with an optional format suffix pattern. This makes it suitable for most API projects. This route also inspects a ViewSet and determine the necessary URL patterns based on the method defined.
+# (e,g. `list`, `retrieve`, `create`, `update`, `destroy`)
+
+# API Root View:  
+This is the output of Api root view
+{
+    "products": "http://127.0.0.1:8000/store/products/",
+    "collections": "http://127.0.0.1:8000/store/collections/"
+}
