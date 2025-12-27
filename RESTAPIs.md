@@ -7,9 +7,13 @@
 --> We can hava other endpoints for managing our shopping cart /carts or orders /orders.
 --> Client apps can request to the endpoints to get or save products,orders,shopping carts.
 
+\\ ------------------------------------ ------------------------------------ \\ 
+
 **Resources**
 --> The resource in a RESTful API is like an object in the application, like product,collection,cart.
 --> Client app can access them using a URL. URL stands for Uniform Recourse Locator.
+
+\\ ------------------------------------ ------------------------------------ \\ 
 
 **Resource Representation**
 --> We can identify a resource using its URL
@@ -24,10 +28,14 @@
 --> In JSON, we represent an object using a pair of culy braces
 --> Insie the braces, we can have a bunch of key-value pairs or properties.
 
+\\ ------------------------------------ ------------------------------------ \\ 
+
 **Installing Django REST Framework**
 After the installation, include `rest_framework` to INSTALLED_APPS in the setting.py
 
 # `Serializers: Transforming Django Models to JSON`
+
+\\ ------------------------------------ ------------------------------------ \\ 
 
 **Creating API Views**
 \\ Function-Based API Views \\
@@ -38,6 +46,8 @@ Serializer is an object that knows how to convert a model instance, like a produ
 \\ Basic Serializer \\
 `from rest_framework import serializers` --> Used when you don't have a model
 
+\\ ------------------------------------ ------------------------------------ \\ 
+
 **Serializing Objects**
 Serializing Objects means turning Python objects (usually model instances) into JSON so they can be sent to client.
 # Object -> Serializer -> JSON
@@ -47,7 +57,7 @@ student = Student.objects.get(pk=id) Object
 serializer = StudentSerializer(student) Serializer
 serializer.data
 
->>Little Adjustment in the setting.py
+>> Little Adjustment in the setting.py
 # REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False
 }
@@ -86,6 +96,8 @@ Arguments:
 `queryset` - The queryset used for model instance lookups when validating the field input
 `lookup_field` - Default is `pk`.
 
+\\ ------------------------------------ ------------------------------------ \\ 
+
 **Model Serializers**
 Model serializers are a shotcut for creating serializers that work directly with Django models.
 `Model` = database structure
@@ -96,6 +108,8 @@ Model serializers are a shotcut for creating serializers that work directly with
 def validate()
 def create()
 >
+
+\\ ------------------------------------ ------------------------------------ \\ 
 
 **Deserializing Objects**
 Deserializing objects meanns converting incoming JSON Data into Python objects (usaully Model Instances).
@@ -139,11 +153,15 @@ Summary: Data Validation ensures only correct and safe data is saved to the data
 # serializer.validated_data
 # return Response('OK')
 
+\\ ------------------------------------ ------------------------------------ \\ 
+
 **Updating an Existing Object**
 \\ PUT method \\
 When updating, you pass the existing model instances as the first argument to the serializer and the new data as the `data` keyword argument.
 # product = get_object_or_404(Product, pk=id) # getting the existing users data in the datase
 # serializer = ProductSerializer(product, data=request.data) # data=request.data: new data submiited by the client or user
+
+\\ ------------------------------------ ------------------------------------ \\ 
 
 **Deleting Objects**
 \\ Business Rule \\
