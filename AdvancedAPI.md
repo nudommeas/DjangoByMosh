@@ -137,6 +137,46 @@ This is the output of Api root view
 `product_router.register('reviews', views.ReviewViewSet, basename='product-review')`
 The resulting URLs will look like `products/{product_pk}/reviews` and `products/{product_pk}/reviews/{pk}`
 
-# get_object = For nested resources, the `ViewSet` for the `child resource` (BookViewSet in this case) needs to be aware of its `parent's ID`. This is typically done by overriding `get_queryset`to filter by the parent ID provided in the URL.
+\\ ------------------------------------ ------------------------------------ \\ 
+
+**get_queryset**
+1️⃣ What is get_queryset?
+# It is a method in Django/DRF views and Viewsets that defines which objects are returned for a request. 
+# It decides WHAT data this API endpoint is allowed to return.
+2️⃣ Why does get_queryset() exist?
+# becuase different requests may need different data.
+Note: You can not do this with a static `queryset = Product.objects.all()`
+3️⃣ Mostly, using for `query parameters`
+4️⃣ Filtering by URL parameters(kwargs), Mostly used in `Nested Routes`,` /collections/3/products/ `
+# Summary 
+- get_queryset() dynamically controls which database objects an API endpoint returns, based on request data, user, or URL parameters.
 
 # get_serializer_context() - we use a context object to provide additional data to a serializer.
+
+\\ ------------------------------------ ------------------------------------ \\ 
+
+**Filter against query parameters**
+
+# What is Filter against query parameters mean?
+✅ It means:
+# Using Values from the URL query string to filter database results
+Example URL:
+`GET /products/?collection_id=3&min_price=100` Collection and min_price are query parameters
+
+# Why do we use filtering with query parameters?
+✅ APIs must be flexible:
+    Clients (frontend) choose what data they want
+
+# How to access query parameters in DRF?
+Using `request.query_params`
+
+# Why use .get() instead of []?
+✔ Safe if param doesn’t exist
+❌ request.query_params['collection'] → error if missing
+
+# When should we use it?
+Use filtering against query params when:
+- List endpoints
+- Search
+- Filtering by category
+- Filtering price/data/status

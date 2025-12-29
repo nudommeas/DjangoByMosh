@@ -5,7 +5,7 @@ from . import views
 # from pprint import pprint
 
 router = routers.DefaultRouter()
-router.register(r'products', views.ProductViewset)
+router.register(r'products', views.ProductViewset, basename='products')
 router.register(r'collections', views.CollectionViewset)
 
 product_router = routers.NestedDefaultRouter(router, 'products', lookup='product') #We're going to have a parameter called product_pk

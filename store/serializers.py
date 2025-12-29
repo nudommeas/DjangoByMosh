@@ -22,6 +22,7 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Review
         fields = ['id', 'date', 'name', 'description']
+     #We did not want to show the product, so we use the get_serializer_context method in the View and create method in the serializer.py
 
     def create(self, validated_data):
         product_id = self.context['product_id']

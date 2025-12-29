@@ -13,8 +13,15 @@ from django.db.models import Count
 # Create your views here.
 
 class ProductViewset(ModelViewSet):
-    queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        collecion = self.request.query_params.get('collection_id')
+        if collecion is not None:
+            queryset = queryset.filter(collection__id=collecion)
+        return queryset
+
     def get_serializer_context(self):
         return {'request': self.request}
     
