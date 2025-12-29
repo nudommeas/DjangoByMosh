@@ -40,4 +40,13 @@ class CollectionViewset(ModelViewSet):
     #     return Response(status=status.HTTP_204_NO_CONTENT)
 class ReviewViewSet(ModelViewSet):
     queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
+    serializer_class = ReviewSerializer #In this serializer_class, we have access to the URL parameter.So we can read the product ID from the URL using a context object
+
+    def get_queryset(self):
+        # We expect a URL parameter like 'product' (defined by the router)
+        # to identify the parent Product.
+        product_pk = self.kwargs['product_pk']
+        return Review.objects.filter(product_id=product_pk)
+
+    def get_serializer_context(self):
+        return {'product_id': self.kwargs['product_pk']}

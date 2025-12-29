@@ -116,3 +116,27 @@ This is the output of Api root view
     "products": "http://127.0.0.1:8000/store/products/",
     "collections": "http://127.0.0.1:8000/store/collections/"
 }
+
+\\ ------------------------------------ ------------------------------------ \\ 
+
+**Nested Routers**
+# INSTALLATION: pip install drf-nested-routers
+
+1. Defining Routers
+
+# To create a nested route, you first define a standard DRF router and then wrap it in a `NestedDefaultRouter`. 
+`router = routers.DefaultRouter()`
+
+# Initial Router: You register the parent resource (e.g, `products`) with a standard `DefaultRouter`.
+`router.register(r'products', views.ProductViewset)`
+
+# Nested Router: You then initialise a `NestedDefaultRouter`, passing in the `parent router` and the `parent prefix`. The `lookup` argument defines the prefix for the keyword argument used in the URL (e.g,`lookup='product'` result in `product_pk`)
+`product_router = routers.NestedDefaultRouter(router, 'products', lookup='product')`
+
+# Registration: Finally, you register the child resource (e.g, `reviews`) to this new nested router.
+`product_router.register('reviews', views.ReviewViewSet, basename='product-review')`
+The resulting URLs will look like `products/{product_pk}/reviews` and `products/{product_pk}/reviews/{pk}`
+
+# get_object = For nested resources, the `ViewSet` for the `child resource` (BookViewSet in this case) needs to be aware of its `parent's ID`. This is typically done by overriding `get_queryset`to filter by the parent ID provided in the URL.
+
+# get_serializer_context() - we use a context object to provide additional data to a serializer.
