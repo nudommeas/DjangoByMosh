@@ -180,3 +180,36 @@ Use filtering against query params when:
 - Search
 - Filtering by category
 - Filtering price/data/status
+
+\\ ------------------------------------ ------------------------------------ \\ 
+
+**Generic Filter**
+
+Using Django Filter Library - pip install django-filter
+
+INSTALLED_APPS = [
+    ...
+    'django_filters',
+]
+`from django_filters.rest_framework import DjangoFilterBackend`
+
+# A FilterSet specifies which fields of a model can be filtered and how they should be filtered.
+Creating a file `filter.py` to define `Filterset` within your app.
+`from django_filters.rest_framework import Filterset`
+
+# Common Lookup fields to Use
+--Containment and String Matching:
+- __contains :  Checks if the field value contains the specified value, case-sensitive.
+- __icontains : Case-insensitive version of `contains`. This is commonly used for search functionality.
+- __startswith : Checks for a case-sensitive start of the string.
+- __istartswith : Case-insensitive version of `startswith`.
+- __endswith :  Checks for a case-sensitive end of the string.
+- __iendswith : Case-insensitive version of `endswith`.
+--Comparisons:
+- gt : Greater than
+- gte : Greater than or equal to
+- lt : Less than
+- lte : Less than or equal to
+- range : Checks if the field value is between two values.
+--Date and Time Lookups
+- Year , Month , Day : Extracts the year, month, or day part from a date or datetime field for comparison.
