@@ -213,3 +213,11 @@ Creating a file `filter.py` to define `Filterset` within your app.
 - range : Checks if the field value is between two values.
 --Date and Time Lookups
 - Year , Month , Day : Extracts the year, month, or day part from a date or datetime field for comparison.
+
+\\ ------------------------------------ ------------------------------------ \\ 
+
+**Searching**
+`from rest_framework.filters import SearchFilter`
+
+# Include `SearchFilter` inside the `filter_backends = []`
+# search_fields = ['title', 'description']
