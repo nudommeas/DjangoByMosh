@@ -221,3 +221,11 @@ Creating a file `filter.py` to define `Filterset` within your app.
 
 # Include `SearchFilter` inside the `filter_backends = []`
 # search_fields = ['title', 'description']
+
+\\ ------------------------------------ ------------------------------------ \\ 
+
+**Sorting data**
+`from rest_framework.filters import SearchFilter, OrderingFilter`
+ordering_fields = ['unit_price]
+- ascending
+- descending
