@@ -241,3 +241,42 @@ Safe for public APIs
 No ID collision across systems
 Great for distributed systems
 Professional / industry standard
+
+\\ ------------------------------------ ------------------------------------ \\ 
+
+# The `SerializerMethodField()` in Django REST Framework (DRF) is a read-only field used to add custom, non-model data to a serializer's output representation. It gets its value by calling a specific method on the serializer class itself. 
+
+\\ ------------------------------------ ------------------------------------ \\ 
+
+**What is Eager Loading?**
+
+Query = a request to the database
+
+Eager Loading is a technique to fetch related objects in a single database query.
+
+# `select_related()` method
+- Purpose : Primarily used for foreign key (`ForeignKey`) and one-to-one (`OneToOneField`) relationships.
+- It performs an SQL `JOIN` operation, bringing all related data into a sigle, comprehensive result set.
+# `prefetch_related()` method
+
+# 1️⃣ Single query (Simple Case) = 1 Query
+`books = Book.objects.all()`
+
+# 2️⃣ Multiple queries
+authors = Author.objects.all()
+for author in authors:
+    print(author.books.all())
+# Queries Django Sends
+- SELECT * FROM author;                 -- 1 query
+- SELECT * FROM book WHERE author_id=1; -- query for author 1
+- SELECT * FROM book WHERE author_id=2; -- query for author 2
+- SELECT * FROM book WHERE author_id=3; -- query for author 3
+# ❌ If you have 10 authors → 11 queries
+
+# 3️⃣ With prefetch_related
+authors = Author.objects.prefetch_related('books')
+- SELECT * FROM author;                  -- 1 query
+- SELECT * FROM book WHERE author_id IN (1,2,3,...); -- 1 query
+# ✅ Always 2 queries, no matter how many authors
+
+# `Multiple queries look like repeated SELECT statements executed again and again inside loops.`
