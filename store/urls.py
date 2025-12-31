@@ -7,6 +7,7 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'products', views.ProductViewset, basename='products')
 router.register(r'collections', views.CollectionViewset)
+router.register(r'carts', views.CartViewSet)
 
 product_router = routers.NestedDefaultRouter(router, 'products', lookup='product') #We're going to have a parameter called product_pk
 product_router.register('reviews', views.ReviewViewSet, basename='product-review') # used as a prefix for generating the name of URL pattern

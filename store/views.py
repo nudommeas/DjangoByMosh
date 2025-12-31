@@ -10,9 +10,9 @@ from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from .filter import ProductFilter   
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
-from .models import Product, Collection, Review
-from .serializers import ProductSerializer, CollectionSerializer, ReviewSerializer
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet, GenericViewSet
+from .models import Product, Collection, Review, Cart
+from .serializers import ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer
 from django.db.models import Count
 from .pagination import DefualtPagination
 # Create your views here.
@@ -62,3 +62,8 @@ class ReviewViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         return {'product_id': self.kwargs['product_pk']}
+    
+class CartViewSet(CreateModelMixin, GenericViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+    
