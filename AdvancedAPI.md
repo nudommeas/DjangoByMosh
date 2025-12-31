@@ -229,3 +229,15 @@ Creating a file `filter.py` to define `Filterset` within your app.
 ordering_fields = ['unit_price]
 - ascending
 - descending
+
+**GUID/UUID**
+
+# What is a GUID/UUID?    
+A UUID is a globally unique identifier
+# Why use GUID?
+✅ Benefits
+Harder to guess (better security)
+Safe for public APIs
+No ID collision across systems
+Great for distributed systems
+Professional / industry standard
