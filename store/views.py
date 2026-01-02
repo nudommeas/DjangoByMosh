@@ -11,7 +11,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .filter import ProductFilter   
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet, GenericViewSet
-from .models import Product, Collection, Review, Cart
+from .models import Product, Collection, Review, Cart, CartItem
 from .serializers import ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer
 from django.db.models import Count
 from .pagination import DefualtPagination
@@ -70,3 +70,7 @@ class CartViewSet(CreateModelMixin,
     queryset = Cart.objects.prefetch_related('items__product').all()
     serializer_class = CartSerializer
     
+class CartItemViewSet(ModelViewSet):
+    serializer_class = CartSerializer
+    def get_queryset(self):
+        return CartItem.objects.filter(cart__id=self.kwargs['cart_pk']).select_related('product')
