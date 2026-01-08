@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'store',
     'tags',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,4 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'COERCE_DECIMAL_TO_STRING': False,
 }
+AUTH_USER_MODEL = 'core.User'
