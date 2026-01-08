@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.contrib import admin
+from django.conf import settings
 import uuid
 class Promotion(models.Model):
     description = models.CharField(max_length=255)
@@ -41,18 +43,21 @@ class Customer(models.Model):
         (MEMBER_SILVER, 'Silver'),
         (MEMBER_GOLD, 'Gold')
     ]
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=255,unique=True)
     phone = models.CharField(max_length=100)
     birth_date = models.DateField()
     membership = models.CharField(max_length=1, choices=MEMBER_CHOICES, default=MEMBER_BRONZE)
-
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.user.first_name} {self.user.last_name}"
+    # @admin.display(ordering='user__first_name') # used to sort a model fields
+    # def first_name(self):
+    #     return self.user.first_name
+    # @admin.display(ordering='user__last_name')
+    # def last_name(self):
+    #     return self.user.last_name
     
     class Meta:
-        ordering = ['first_name', 'last_name']
+        ordering = ['user__first_name', 'user__last_name']
 
 class Order(models.Model):
     PAYMENT_STATUS_PENDING = 'P'
